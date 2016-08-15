@@ -33,6 +33,9 @@
     "eslint": "^3.3.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-git": "^1.11.0",
+    "gulp-google-webfonts": "0.0.13",
+    "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0"
   }
 }

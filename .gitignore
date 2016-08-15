@@ -1,8 +1,8 @@
 # Created by https://www.gitignore.io/api/osx,node
 
 #compiled source
-app/**/*.css
-app/js
+src/themes/**/*.css
+src/js-dist/**/*
 
 #downloads
 /**/google-fonts

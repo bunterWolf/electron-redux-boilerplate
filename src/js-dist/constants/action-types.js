@@ -1,5 +1,0 @@
-'use strict';
-
-exports.__esModule = true;
-const INCREMENT_COUNTER = exports.INCREMENT_COUNTER = 'INCREMENT_COUNTER';
-const DECREMENT_COUNTER = exports.DECREMENT_COUNTER = 'DECREMENT_COUNTER';

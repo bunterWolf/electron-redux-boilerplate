@@ -1,104 +1,93 @@
 'use strict';
 
-var gulp = require('gulp'),
-    sourcemaps = require('gulp-sourcemaps'),
-    Config = require('./gulpfile.config'),
-    babel = require("gulp-babel"),
-    electron = require('electron-connect').server.create({
-      "remote-debugging-port": 9992
-    });
-
-var config = new Config();
-
-/**
- * > gulp
- */
-gulp.task('default', ['compile-babel']);
-
-/**
- * > gulp dev
- */
-gulp.task('dev', ['set-dev-node-env', 'compile-babel'], function () {
-
-  electron.start(["--remote-debugging-port=9992"]) // Electron Connect, Auto Reload
-
-  gulp.watch('./src/**/*.scss', ['sass', 'reloadSASS']);
-  gulp.watch('./src/js-esNext/**/*', ['compile-babel', 'reloadTS']);
+const gulp = require('gulp')
+const sourcemaps = require('gulp-sourcemaps')
+const babel = require("gulp-babel")
+const sass = require('gulp-sass')
+const googleWebFonts = require('gulp-google-webfonts')
+const git = require('gulp-git');
+const electron = require('electron-connect').server.create({
+  "remote-debugging-port": 9992
 });
 
-/**
- * > gulp debug
- */
-gulp.task('debug', ['set-debug-node-env'], function () {
+const config = { source: './src' }
+config.js2015 = config.source + '/js-dist/'
+config.jsNext = config.source + '/js/**/*'
+config.sass = config.source + '/themes/default/sass/**/*'
+config.css = config.source + '/themes/default/css/'
+config.fontsList = config.source + '/themes/googlefonts.list'
+config.fontsDest = config.source + '/themes/google-fonts/'
 
+/* Start Tasks */
+
+gulp.task('default', ['production', 'compile-babel', 'compile-sass', 'fonts', 'git-submodules']);
+
+gulp.task('develop', ['set-dev-node-env', 'compile-babel'], function () {
   electron.start(["--remote-debugging-port=9992"]) // Electron Connect, Auto Reload
-
-  gulp.watch('./src/**/*.scss', ['sass', 'reloadSASS']);
-  gulp.watch('./src/ts/**/*', ['compile-babel', 'reloadTS']);
+  gulp.watch(config.sass, ['compile-sass', 'reloadSASS']);
+  gulp.watch(config.jsNext, ['compile-babel', 'reloadJS']);
 });
 
-/**
- * > gulp prod
- */
 gulp.task('production', ['set-prod-node-env'], function () {
   electron.start() // Electron Connect, Auto Reload
 });
 
-/**
- * Compile TypeScript and include references to library and app .d.ts files.
- */
+
+/* compile tasks */
+
 gulp.task('compile-babel', function () {
-    // var sourceTsxFiles = [config.allTypeScript, //path to typescript files
-    //                      config.libraryTypeScriptDefinitions]; //reference to library .d.ts files
-    // var tsResult = gulp.src(sourceTsxFiles)
-    //                    .pipe(sourcemaps.init())
-    //                    .pipe(tsc(tsProject));
-    //     tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
-    //     return tsResult.js
-    //                     .pipe(sourcemaps.write({sourceRoot: '/src/ts'}))
-    //                     .pipe(gulp.dest(config.tsOutputPath))
-
-
-    // .pipe(sourcemaps.init())
-    // .pipe(babel())
-    // .pipe(concat("all.js"))
-    // .pipe(sourcemaps.write("."))
-    // .pipe(gulp.dest("dist"));
-
-
-
-    return gulp.src(config.esNext)
-    // .pipe(sourcemaps.init())
+  return gulp.src(config.jsNext)
+    .pipe(sourcemaps.init())
     .pipe(babel())
-    // .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(config.es2015));
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(config.js2015));
 });
 
-/**
- * Compile SASS
- */
-gulp.task('sass', function () {
-  console.log('SASS')
-  gulp.src('./src/css/*.scss')
+gulp.task('compile-sass', function () {
+  return gulp.src(config.sass)
     .pipe(sass.sync().on('error', sass.logError))
-    .pipe(gulp.dest('./src/css'));
-  gulp.src('./src/themes/default-light/css/*.scss')
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(gulp.dest('./src/themes/default-light/css'));
+    .pipe(gulp.dest(config.css));
 });
 
-/**
- * Reload After Compile with Electron Connect
- */
-gulp.task('reloadTS', ['compile-babel'], function () {
-  console.log('#TS Changed: Reload Electron')
+
+/*  Reload After Compile with Electron Connect */
+
+gulp.task('reloadJS', ['compile-babel'], function () {
+  console.log('#JS Changed: Reload Electron')
   electron.reload()
 })
 
-gulp.task('reloadSASS', ['sass'], function () {
+gulp.task('reloadSASS', ['compile-sass'], function () {
   console.log('#SASS Changed: Reload Electron')
   electron.reload()
 })
+
+
+/** usefull? **/
+gulp.task('debug', ['set-debug-node-env'], function () {
+  electron.start(["--remote-debugging-port=9992"]) // Electron Connect, Auto Reload
+  gulp.watch(config.sass, ['compile-sass', 'reloadSASS']);
+  gulp.watch(config.jsNext, ['compile-babel', 'reloadJS']);
+});
+
+/**
+ * Google Webfonts
+ */
+
+const googleWebFontsOptions = { };
+
+gulp.task('fonts', function () {
+	return gulp.src(config.fontsList)
+		.pipe(googleWebFonts(googleWebFontsOptions))
+		.pipe(gulp.dest(config.fontsDest));
+	});
+
+gulp.task('git-submodules', function() {
+
+  // Mozilla PDF.JS branch gh-pages
+  // https://github.com/mozilla/pdf.js/wiki/Setup-PDF.js-in-a-website
+  // git.addSubmodule('https://github.com/mozilla/pdf.js', 'library/pdfjs-gh-pages', { args: '-b gh-pages'});
+});
 
 
 /**

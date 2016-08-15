@@ -12,7 +12,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('electron-connect').client.create()
 }
 
-
 const store = configureStore({});
 
 ReactDOM.render(

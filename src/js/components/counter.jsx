@@ -3,8 +3,8 @@ import React from 'react'
 import { increment, decrement, asyncCalculate } from '../actions/counterActions'
 import { connect } from 'react-redux'
 
-@connect((state) => {
-  return state.counterReducer
+@connect((store) => {
+  return store.counter
 })
 export class Counter extends React.Component {
 

@@ -1,12 +1,12 @@
 # Electron + Redux + React Boilerplate
 
-### + Babel, Gulp, electron-conenct
+### + Babel, Gulp, electron-connect
 
 	> npm i
 	> npm run dev
 
 
-### Install Electron developer Extionens
+### Install > electron developer extensions
 
 execute **window.devToolsSetup()** on the Chrome developer console to install them
 

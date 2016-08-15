@@ -20,3 +20,11 @@ execute **window.devToolsSetup()** on the Chrome developer console to install th
 * compile sass
 * download google-fonts
 * download git modules
+
+
+### Atom Plugins to use
+
+* linter
+* linter-eslint
+* linter-sass-lint
+* react

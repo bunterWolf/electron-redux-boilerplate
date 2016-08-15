@@ -1,10 +1,9 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 
-// Font
+/* Font */
 $font-default: 'Open Sans', Arial;
 $font-serif: Bitter, Arial;
 $size-font-default: 13.3px;
 
-$color-background-selected: #a8dcf8;
-
+@import '../../google-fonts/fonts.css';
 @import 'reset';

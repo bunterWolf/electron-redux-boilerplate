@@ -31,6 +31,7 @@
     "electron-connect": "^0.4.4",
     "electron-devtools-installer": "^2.0.1",
     "eslint": "^3.3.0",
+    "eslint-plugin-react": "^6.1.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-git": "^1.11.0",

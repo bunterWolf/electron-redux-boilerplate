@@ -22,7 +22,7 @@ config.fontsDest = config.source + '/themes/google-fonts/'
 
 gulp.task('default', ['production', 'compile-babel', 'compile-sass', 'fonts', 'git-submodules']);
 
-gulp.task('develop', ['set-dev-node-env', 'compile-babel'], function () {
+gulp.task('develop', ['set-dev-node-env', 'compile-babel', 'compile-sass'], function () {
   electron.start(["--remote-debugging-port=9992"]) // Electron Connect, Auto Reload
   gulp.watch(config.sass, ['compile-sass', 'reloadSASS']);
   gulp.watch(config.jsNext, ['compile-babel', 'reloadJS']);

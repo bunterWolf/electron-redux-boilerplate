@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
 // import logger from './logger'
-import {rootReducer} from '../reducers/root'
+import {rootReducer} from '../reducers/reducerIndex'
 
 // import promiseMiddleware from '../middleware/promise-middleware'
 
 export function configureStore(initialState) {
-               
+
   // http://redux.js.org/docs/api/compose.html kapier ich nicht
   const store = compose(_getMiddleware())(createStore)(rootReducer, initialState, window.devToolsExtension ? window.devToolsExtension() : f => f);
   return store;
@@ -15,7 +15,7 @@ export function configureStore(initialState) {
 function _getMiddleware() {
   let middleware = [
     // promiseMiddleware,
-    thunk, 
+    thunk,
   ];
 
   if (process.env.NODE_ENV !== 'production') {

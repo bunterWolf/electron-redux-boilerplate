@@ -1,6 +1,6 @@
 "use strict"
 import React from 'react'
-import { increment, decrement } from '../actions/counter'
+import { increment, decrement } from '../actions/counterActions'
 import { connect } from 'react-redux'
 
 @connect((state) => {
@@ -13,7 +13,6 @@ export class Counter extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-    console.log(this.props)
   }
 
   inc = () => {this.props.dispatch(increment())}

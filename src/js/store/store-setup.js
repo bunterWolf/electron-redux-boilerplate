@@ -6,7 +6,7 @@ import {calulateCounter} from '../actions/counterActions'
 
 // import promiseMiddleware from '../middleware/promise-middleware'
 
-export function configureStore(initialState) {
+export function storeSetup(initialState) {
 
 const store = createStore(
   rootReducer,

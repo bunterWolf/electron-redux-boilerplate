@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Counter} from './components/counter'
 import {Provider} from 'react-redux'
-import {configureStore} from './store/configure-store'
+import {storeSetup} from './store/store-setup'
 import {DevToolsSetup} from './tools/devtools-setup'
 
 
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('electron-connect').client.create()
 }
 
-const store = configureStore({});
+const store = storeSetup({});
 
 ReactDOM.render(
     <Provider store={ store }>
